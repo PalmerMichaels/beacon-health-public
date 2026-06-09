@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { buildBeacon, queues, renderReport } from "../src/index.ts";
+import { buildBeaconHealthReport, queues, renderReport } from "../src/index.ts";
 
 const requiredFiles = ["PLAN.md", "README.md", "package.json", "tsconfig.json", "src/index.ts", "tests/beacon.test.ts"];
 const forbiddenSeedPatterns = [/diagnos(?:e|is)/i, /treatment/i, /ssn/i, /\bmrn\b/i, /\bdob\b/i, /insurance/i, /claim/i, /@/, /555-/];
@@ -41,11 +41,14 @@ function validateSyntheticData(failures: string[]): void {
 }
 
 function validateReport(failures: string[]): void {
-  const report = buildBeacon();
+  const report = buildBeaconHealthReport();
   const rendered = renderReport(report);
 
-  if (report.length !== queues.length) failures.push("Report queue count does not match seed data.");
-  if (report.filter((card) => card.status === "red").length !== 1) failures.push("Expected exactly one synthetic red queue.");
+  if (report.intake.length !== queues.length) failures.push("Report queue count does not match seed data.");
+  if (report.intake.filter((card) => card.status === "red").length !== 1) failures.push("Expected exactly one synthetic red queue.");
+  if (report.appointments.length < 3) failures.push("Expected synthetic appointment coordination cards.");
+  if (report.coverage.length < 3) failures.push("Expected synthetic staffing coverage cards.");
+  if (report.drafts.length < 2) failures.push("Expected synthetic assistant administrative drafts.");
   if (!rendered.includes("Do not use with PHI")) failures.push("Rendered report must prohibit PHI use.");
 }
 
@@ -54,7 +57,7 @@ async function validateText(repoRoot: string, failures: string[]): Promise<void>
   const readme = await readFile(join(repoRoot, "README.md"), "utf8").catch(() => "");
   const appOutput = await readFile(join(repoRoot, "src/index.ts"), "utf8").catch(() => "");
 
-  for (const phrase of ["synthetic", "clean-room", "not medical advice", "not care coordination for real patients", "PHI", "no affiliation"]) {
+  for (const phrase of ["synthetic", "clean-room", "admin-only", "not medical advice", "not care coordination for real patients", "PHI", "no affiliation"]) {
     if (!readme.toLowerCase().includes(phrase.toLowerCase())) failures.push(`README missing required phrase: ${phrase}`);
   }
 
