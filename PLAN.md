@@ -11,17 +11,16 @@ Build an original TypeScript command-line tool named `beacon-health`: a syntheti
 - Document setup, usage, provenance, and limitations in `README.md`.
 
 ## Intended Files
-- `package.json` for npm scripts and minimal dev dependencies.
-- `tsconfig.json` for TypeScript compilation.
+- `package.json` for Node 22 direct TypeScript npm scripts with no dependencies.
+- `tsconfig.json` for editor/type-checker settings if desired.
 - `src/index.ts` for the CLI entry point, synthetic queue data, calculations, and report formatting.
 - `tests/beacon.test.ts` for Node test-runner validation.
 - `scripts/validate.ts` for repository validation checks.
 - `README.md` for usage and explicit clean-room/non-regulated disclaimers.
 
 ## Validation
-- `npm install`
 - `npm test`
-- `npm run build`
+- `npm run validate`
 - `npm start`
 
 ## Disclaimers
