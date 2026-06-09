@@ -1,22 +1,21 @@
 # Beacon Health Clean-Room Implementation Plan
 
 ## Clean-Room App Concept
-Build an original TypeScript command-line tool named `beacon-health`: a synthetic, non-clinical appointment readiness beacon for fictional appointment operations. The tool will organize made-up outreach tasks, transport needs, reminder gaps, and appointment readiness signals for demonstration only.
+Build an original TypeScript command-line tool named `beacon-health`: a synthetic, non-clinical operations beacon for fictional queue and staffing pressure. The tool will organize made-up queue load, wait targets, staffed slots, flex capacity, and fallback team suggestions for demonstration only.
 
 ## Scope
-- Create a runnable TypeScript CLI that prints a synthetic appointment readiness report.
-- Include only synthetic seed data for fictional appointment slots, outreach tasks, transport needs, and reminder gaps.
-- Add deterministic readiness scoring and task prioritization that avoid medical, diagnostic, triage, treatment, billing, or real care-coordination logic.
-- Add tests/validation for scoring behavior, seed-data integrity, and CLI output disclaimers.
+- Create a runnable TypeScript CLI that prints a synthetic operations queue report.
+- Include only synthetic seed data for fictional operations queues, wait targets, staffing slots, flex capacity, and fallback teams.
+- Add deterministic capacity, load, status, and suggestion logic that avoids medical, diagnostic, triage, treatment, billing, or real care-coordination logic.
+- Add tests/validation for scoring behavior, seed-data integrity, CLI execution, and output disclaimers.
 - Document setup, usage, provenance, and limitations in `README.md`.
 
 ## Intended Files
 - `package.json` for npm scripts and minimal dev dependencies.
 - `tsconfig.json` for TypeScript compilation.
-- `src/index.ts` for the CLI entry point and report formatting.
-- `src/readiness.ts` for deterministic non-clinical readiness calculations.
-- `src/seed.ts` for synthetic fictional data.
+- `src/index.ts` for the CLI entry point, synthetic queue data, calculations, and report formatting.
 - `tests/beacon.test.ts` for Node test-runner validation.
+- `scripts/validate.ts` for repository validation checks.
 - `README.md` for usage and explicit clean-room/non-regulated disclaimers.
 
 ## Validation

@@ -2,43 +2,30 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { describe, it } from "node:test";
 
-import { buildReadinessReport, cleanRoomDisclaimer, evaluateSlot } from "../src/readiness.js";
-import { syntheticAppointmentSlots } from "../src/seed.js";
+import { buildBeacon, hourlyCapacity, loadRatio, queues, renderReport, statusFor } from "../src/index.ts";
 
-describe("appointment readiness beacon", () => {
-  it("builds deterministic totals from synthetic appointment slots", () => {
-    const report = buildReadinessReport(syntheticAppointmentSlots, "Validation Schedule");
-
-    assert.equal(report.generatedFor, "Validation Schedule");
-    assert.equal(report.totalSlots, 4);
-    assert.equal(report.readyCount, 1);
-    assert.equal(report.watchCount, 2);
-    assert.equal(report.actionCount, 1);
-    assert.equal(report.totalOpenTasks, 4);
-    assert.equal(report.transportNeeds, 2);
-    assert.equal(report.reminderGaps, 2);
-    assert.equal(report.disclaimer, cleanRoomDisclaimer);
+describe("synthetic operations beacon", () => {
+  it("calculates deterministic queue capacity and load", () => {
+    assert.equal(hourlyCapacity(queues[0]), 23);
+    assert.equal(loadRatio(queues[1]), 1.72);
   });
 
-  it("prioritizes high-priority fictional outreach before lower priority gaps", () => {
-    const slot = evaluateSlot(syntheticAppointmentSlots[1]);
-
-    assert.equal(slot.readinessScore, 42);
-    assert.equal(slot.band, "action");
-    assert.equal(slot.nextAction, "Call fictional contact to confirm arrival preference");
-    assert.deepEqual(slot.openTasks.map((task) => task.priority), ["high", "medium"]);
+  it("assigns queue status bands from synthetic pressure", () => {
+    assert.equal(statusFor(queues[0]), "green");
+    assert.equal(statusFor(queues[1]), "red");
+    assert.equal(statusFor(queues[2]), "green");
   });
 
-  it("marks a complete synthetic slot as ready", () => {
-    const slot = evaluateSlot(syntheticAppointmentSlots[0]);
+  it("orders beacon cards by severity and load", () => {
+    const cards = buildBeacon();
 
-    assert.equal(slot.readinessScore, 100);
-    assert.equal(slot.band, "ready");
-    assert.equal(slot.nextAction, "No readiness task required");
+    assert.equal(cards.length, 4);
+    assert.equal(cards[0]?.status, "red");
+    assert.equal(cards[0]?.queue, "Scheduling callbacks");
   });
 
   it("keeps seed data synthetic and excludes obvious regulated identifiers", () => {
-    const joined = JSON.stringify(syntheticAppointmentSlots).toLowerCase();
+    const joined = JSON.stringify(queues).toLowerCase();
     const disallowedTerms = ["diagnosis", "treatment", "ssn", "mrn", "dob", "insurance", "claim", "@", "555-"];
 
     for (const term of disallowedTerms) {
@@ -46,11 +33,17 @@ describe("appointment readiness beacon", () => {
     }
   });
 
-  it("renders explicit non-regulated disclaimers in CLI output", () => {
-    const output = execFileSync(process.execPath, ["dist/src/index.js"], { encoding: "utf8" });
+  it("renders explicit non-regulated disclaimers", () => {
+    const output = renderReport();
 
     assert.match(output, /Not medical advice/i);
-    assert.match(output, /not .*care coordination for real patients/i);
+    assert.match(output, /not care coordination for real patients/i);
     assert.match(output, /Do not use with PHI/i);
+  });
+
+  it("runs the CLI directly through Node 22 TypeScript execution", () => {
+    const output = execFileSync(process.execPath, ["src/index.ts"], { encoding: "utf8" });
+
+    assert.match(output, /Beacon Health synthetic operations beacon/);
   });
 });

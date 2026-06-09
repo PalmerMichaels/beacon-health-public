@@ -1,50 +1,41 @@
-# beacon-health
+# Beacon Health
 
-`beacon-health` is an original clean-room TypeScript CLI for a synthetic, non-clinical appointment readiness beacon. It organizes fictional outreach tasks, transport needs, and reminder gaps for made-up appointment slots.
+Beacon Health is an original clean-room TypeScript CLI for synthetic operations visibility. It models fictional queue load and staffing pressure without touching clinical, patient, billing, or regulated workflows.
 
-## Explicit Non-Regulated Disclaimer
+## What It Does
 
-This project is not medical advice, diagnosis, treatment, triage, billing support, clinical decision support, a diagnostic device, or a medical device. It is not HIPAA/PHI handling, not for clinical decisions, not care coordination for real patients, and must not be used with PHI, real patient data, credentials, scraped data, external services, or regulated healthcare workflows.
+- Reviews fictional operations queues and prints a non-clinical beacon.
+- Includes synthetic staffing and queue pressure data in source files.
+- Suggests non-clinical next actions for fictional teams.
+- Includes tests and validation for scoring, sorting, synthetic data, and disclaimers.
 
-All data is synthetic and fictional. This implementation has no affiliation with any real company, healthcare provider, or YC.
-
-## Requirements
-
-- Node.js 20 or newer.
-- No runtime dependencies.
-- Development dependencies are limited to TypeScript and Node typings.
-
-## Run
+## Usage
 
 ```bash
-npm install
 npm start
 ```
 
-## Validate
+Node 22 executes the TypeScript files directly. No runtime dependencies are required, and `npm install` is not needed to run the app, tests, or validation.
+
+## Validation
 
 ```bash
 npm test
-npm run build
 npm run validate
 ```
 
-## What The CLI Shows
+## Synthetic Data Statement
 
-- A readiness score for each fictional appointment slot.
-- A `ready`, `watch`, or `action` band based only on synthetic operational gaps.
-- Open fictional outreach, transport, reminder, and paperwork tasks.
-- An explicit non-regulated disclaimer in the command output.
+All data in this repository is synthetic seed data created for this demo. Queue names, staffing counts, targets, and fallback teams are invented. Do not enter or store real personal, patient, operational, confidential, or regulated data in this project.
 
-## Project Structure
+## Clean-Room Disclaimer
 
-- `PLAN.md`: implementation plan created before implementation.
-- `src/index.ts`: CLI report formatter.
-- `src/readiness.ts`: deterministic non-clinical readiness scoring.
-- `src/seed.ts`: synthetic appointment slots and tasks.
-- `tests/beacon.test.ts`: Node test-runner validation for scoring, seed safety, and CLI disclaimers.
-- `scripts/validate.ts`: extra repository validation for required files and disclaimers.
+This repository is a clean-room public implementation. It does not use proprietary code, private materials, confidential workflows, or non-public product details from any organization.
 
-## Clean-Room Notes
+## Non-Regulated Disclaimer
 
-The app is built only from the public task prompt and repository name. It does not use proprietary materials, real healthcare records, scraped datasets, external services, or credentials.
+This demo is not medical advice, not medical software, not clinical decision support, not patient triage, not diagnosis, not treatment guidance, not billing software, not HIPAA/PHI handling, and not a medical device. It is not care coordination for real patients and is not for clinical decisions.
+
+## No-Affiliation Statement
+
+There is no affiliation, endorsement, sponsorship, or connection between this public demo and any company, healthcare provider, payer, regulator, or proprietary product.
