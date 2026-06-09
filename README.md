@@ -1,8 +1,18 @@
 # beacon-health
 
-Clean-room public TypeScript demo for summarizing synthetic wellness operations check-ins.
+`beacon-health` is an original clean-room TypeScript CLI for a synthetic, non-clinical appointment readiness beacon. It organizes fictional outreach tasks, transport needs, and reminder gaps for made-up appointment slots.
 
-This is not a clinical, medical, insurance, financial, or regulated-data product. It does not provide medical advice, diagnosis, treatment guidance, patient management, or care recommendations. All included data is fictional demo data about team operations and wellness signals.
+## Explicit Non-Regulated Disclaimer
+
+This project is not medical advice, diagnosis, treatment, triage, billing support, clinical decision support, a diagnostic device, or a medical device. It is not HIPAA/PHI handling, not for clinical decisions, not care coordination for real patients, and must not be used with PHI, real patient data, credentials, scraped data, external services, or regulated healthcare workflows.
+
+All data is synthetic and fictional. This implementation has no affiliation with any real company, healthcare provider, or YC.
+
+## Requirements
+
+- Node.js 20 or newer.
+- No runtime dependencies.
+- Development dependencies are limited to TypeScript and Node typings.
 
 ## Run
 
@@ -11,18 +21,30 @@ npm install
 npm start
 ```
 
-## Test
+## Validate
 
 ```bash
 npm test
+npm run build
+npm run validate
 ```
 
-## Scope
+## What The CLI Shows
 
-- TypeScript CLI that prints a compact operations summary for fictional teams.
-- Synthetic seed data only; no real people, customers, patients, records, voice data, financial data, or regulated data.
-- Local validation checks for summary behavior and basic seed-data safety terms.
+- A readiness score for each fictional appointment slot.
+- A `ready`, `watch`, or `action` band based only on synthetic operational gaps.
+- Open fictional outreach, transport, reminder, and paperwork tasks.
+- An explicit non-regulated disclaimer in the command output.
 
-## Clean-Room Disclaimer
+## Project Structure
 
-This implementation is original and built only from the public repository name `beacon-health`. It does not copy proprietary YC/company content, workflows, customer data, branding, or regulated datasets.
+- `PLAN.md`: implementation plan created before implementation.
+- `src/index.ts`: CLI report formatter.
+- `src/readiness.ts`: deterministic non-clinical readiness scoring.
+- `src/seed.ts`: synthetic appointment slots and tasks.
+- `tests/beacon.test.ts`: Node test-runner validation for scoring, seed safety, and CLI disclaimers.
+- `scripts/validate.ts`: extra repository validation for required files and disclaimers.
+
+## Clean-Room Notes
+
+The app is built only from the public task prompt and repository name. It does not use proprietary materials, real healthcare records, scraped datasets, external services, or credentials.

@@ -16,7 +16,7 @@ Build an original TypeScript command-line tool named `beacon-health`: a syntheti
 - `src/index.ts` for the CLI entry point and report formatting.
 - `src/readiness.ts` for deterministic non-clinical readiness calculations.
 - `src/seed.ts` for synthetic fictional data.
-- `test/readiness.test.ts` for Node test-runner validation.
+- `tests/beacon.test.ts` for Node test-runner validation.
 - `README.md` for usage and explicit clean-room/non-regulated disclaimers.
 
 ## Validation
@@ -27,6 +27,6 @@ Build an original TypeScript command-line tool named `beacon-health`: a syntheti
 
 ## Disclaimers
 - This is a clean-room public implementation with no affiliation to any real company, healthcare provider, or YC.
-- This is not medical advice, diagnosis, treatment, triage, billing support, or clinical decision support.
-- This is not care coordination for real patients and must not be used with PHI or real patient data.
+- This is not medical advice, diagnosis, treatment, triage, billing support, clinical decision support, or a diagnostic device.
+- This is not HIPAA/PHI handling, not for clinical decisions, not care coordination for real patients, and must not be used with PHI or real patient data.
 - No credentials, scraped data, external services, or regulated healthcare workflows are required or included.

@@ -1,16 +1,21 @@
 {
   "name": "beacon-health",
   "version": "0.1.0",
-  "description": "Clean-room TypeScript demo tool for synthetic wellness operations summaries.",
+  "description": "Clean-room TypeScript CLI for synthetic non-clinical appointment readiness beacons.",
   "type": "module",
+  "bin": {
+    "beacon-health": "./dist/src/index.js"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "npm run build && node dist/src/index.js",
-    "test": "npm run build && node --test dist/test/validation.js"
+    "demo": "npm start",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "validate": "npm run build && node dist/scripts/validate.js"
   },
   "devDependencies": {
-    "@types/node": "^20.14.10",
-    "typescript": "^5.5.3"
+    "@types/node": "^22.15.30",
+    "typescript": "^5.8.3"
   },
   "engines": {
     "node": ">=20"
